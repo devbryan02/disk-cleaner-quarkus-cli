@@ -1,25 +1,26 @@
-package bryan.app.temp;
+package bryan.app.recyclebin;
 
 import bryan.app.common.FormatSize;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
 import static bryan.app.common.ReportConstants.*;
 
 @ApplicationScoped
-public class PrintResultTemp {
+public class PrintRecycleBinResult {
+
 
     @Inject
     FormatSize formatSize;
 
-    public void execute(AtomicLong totalSize, AtomicLong totalFiles, AtomicLong skipped, List<Path> tempPaths, boolean isDelete) {
+    public void execute(Path path, AtomicLong size, AtomicLong files, AtomicLong skipped, boolean isDelete) {
 
-        String title = isDelete ? "TEMP CLEANUP REPORT" : "TEMP FILES REPORT";
-        String filesLabel = isDelete ? totalFiles.get() + " deleted" : totalFiles.get() + " files";
-        String sizeLabel = isDelete ? formatSize.execute(totalSize.get()) + " freed" : formatSize.execute(totalSize.get());
+        String title = isDelete ? "RECYCLE BIN CLEANUP REPORT" : "RECYCLE BIN FILES REPORT";
+        String filesLabel = isDelete ? files.get() + " cleaned" : files.get() + " files";
+        String sizeLabel = isDelete ? formatSize.execute(size.get()) + " freed" : formatSize.execute(size.get());
         String skippedLabel = skipped.get() + " skipped";
 
         String report = String.format(
@@ -34,7 +35,7 @@ public class PrintResultTemp {
                 SEPARATOR,
                 title,
                 SEPARATOR,
-                tempPaths.size() + " revised",
+                path,
                 filesLabel,
                 sizeLabel,
                 skippedLabel,
@@ -42,5 +43,6 @@ public class PrintResultTemp {
         );
 
         System.out.println(report);
+
     }
 }

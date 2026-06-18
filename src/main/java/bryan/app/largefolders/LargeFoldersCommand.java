@@ -1,5 +1,7 @@
 package bryan.app.largefolders;
 
+import bryan.app.common.ProcessWithLoading;
+import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 
 @Command(
@@ -8,8 +10,19 @@ import picocli.CommandLine.Command;
 )
 public class LargeFoldersCommand implements Runnable{
 
+    @Inject LargeFoldersService largeFoldersService;
+    @Inject ProcessWithLoading processWithLoading;
+    @Inject PrintLargeFoldersResult print;
+
     @Override
     public void run() {
-        System.out.println("Buscando carpetas pesadas");
+        LargeFoldersService.ScanResult[] result = new LargeFoldersService.ScanResult[1];
+
+        processWithLoading.execute(
+                "Buscando archivos grandes",
+                () -> result[0] = largeFoldersService.scan()
+        );
+
+        print.execute(result[0].files(), result[0].skipped());
     }
 }

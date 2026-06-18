@@ -1,13 +1,14 @@
 package bryan.app.temp;
 
 import bryan.app.common.FormatSize;
+import bryan.app.common.ReportFormatter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import static bryan.app.common.ReportConstants.*;
 
 @ApplicationScoped
 public class PrintResultTemp {
@@ -18,28 +19,28 @@ public class PrintResultTemp {
     public void execute(AtomicLong totalSize, AtomicLong totalFiles, AtomicLong skipped, List<Path> tempPaths, boolean isDelete) {
 
         String title = isDelete ? "TEMP CLEANUP REPORT" : "TEMP FILES REPORT";
+        String revisedStr = tempPaths.size() + " revised";
         String filesLabel = isDelete ? totalFiles.get() + " deleted" : totalFiles.get() + " files";
         String sizeLabel = isDelete ? formatSize.execute(totalSize.get()) + " freed" : formatSize.execute(totalSize.get());
         String skippedLabel = skipped.get() + " skipped";
 
-        String report = String.format(
-                "%n%s%n" +
-                        "| %-" + TITLE_WIDTH + "s |%n" +
-                        "%s%n" +
-                        "|  Path:      %-" + CONTENT_WIDTH + "s |%n" +
-                        "|  Files:     %-" + CONTENT_WIDTH + "s |%n" +
-                        "|  Size:      %-" + CONTENT_WIDTH + "s |%n" +
-                        "|  Skipped:   %-" + CONTENT_WIDTH + "s |%n" +
-                        "%s%n",
-                SEPARATOR,
-                title,
-                SEPARATOR,
-                tempPaths.size() + " revised",
-                filesLabel,
-                sizeLabel,
-                skippedLabel,
-                SEPARATOR
-        );
+        String linePath = "Path:      " + revisedStr;
+        String lineFiles = "Files:     " + filesLabel;
+        String lineSize = "Size:      " + sizeLabel;
+        String lineSkipped = "Skipped:   " + skippedLabel;
+
+        ReportFormatter formatter = new ReportFormatter(Arrays.asList(
+                title, linePath, lineFiles, lineSize, lineSkipped
+        ));
+
+        String report = String.format("%n") + formatter.getSeparator() + String.format("%n") +
+                formatter.formatLine(title) +
+                formatter.getSeparator() + String.format("%n") +
+                formatter.formatLine(linePath) +
+                formatter.formatLine(lineFiles) +
+                formatter.formatLine(lineSize) +
+                formatter.formatLine(lineSkipped) +
+                formatter.getSeparator();
 
         System.out.println(report);
     }

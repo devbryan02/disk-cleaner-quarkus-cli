@@ -54,11 +54,8 @@ public class TempFilesService {
     private List<Path> processTempPaths(Consumer<Path> action) {
         List<Path> tempPaths = resolveTempFiles.execute();
 
-        for (Path path : tempPaths) {
-            if (Files.exists(path)) {
-                action.accept(path);
-            }
-        }
+        for (Path path : tempPaths) if (Files.exists(path)) action.accept(path);
+
         return tempPaths;
     }
 }

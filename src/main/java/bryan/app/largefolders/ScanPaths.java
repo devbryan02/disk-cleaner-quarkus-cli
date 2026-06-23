@@ -48,7 +48,7 @@ public class ScanPaths {
 
             });
         }catch (IOException e){
-            System.out.println("Error al leer el directorio: "+e.getMessage());
+            System.err.println("Error al leer el directorio: " + rootPath + " - " + e.getMessage());
         }
         return results;
     }

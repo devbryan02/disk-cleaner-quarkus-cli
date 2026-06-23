@@ -1,4 +1,4 @@
-package bryan.app.orderFiles;
+package bryan.app.orderfiles;
 
 import bryan.app.common.ProcessWithLoading;
 import jakarta.inject.Inject;

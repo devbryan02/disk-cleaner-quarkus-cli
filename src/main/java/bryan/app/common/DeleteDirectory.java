@@ -73,7 +73,7 @@ public class DeleteDirectory {
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error al acceder al directorio raíz: " + rootPath);
+            System.err.println("Error al acceder al directorio: " + rootPath);
         }
     }
 }

@@ -32,7 +32,7 @@ public class ScanDirectory {
                 @Override
                 @SuppressWarnings("NullableProblems")
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-                    if (!dir.toFile().canRead()) {
+                    if (!Files.isReadable(dir)) {
                         skipped.incrementAndGet();
                         return FileVisitResult.SKIP_SUBTREE;
                     }
@@ -40,7 +40,7 @@ public class ScanDirectory {
                 }
             });
         } catch (IOException e) {
-            System.out.println("Error leyendo: " + path);
+            System.err.println("Error leyendo: " + path);
         }
     }
 }

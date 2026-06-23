@@ -23,7 +23,7 @@ public class RecycleBinService {
         AtomicLong totalFiles = new AtomicLong();
         AtomicLong skipped = new AtomicLong();
 
-        Path pathBin = proccessPath(
+        Path pathBin = processPath(
                 path -> scanDirectory.execute(path, totalSize, totalFiles, skipped)
         );
 
@@ -36,7 +36,7 @@ public class RecycleBinService {
         AtomicLong totalFilesDeleted = new AtomicLong();
         AtomicLong skipped = new AtomicLong();
 
-        Path pathBin = proccessPath(
+        Path pathBin = processPath(
                 path -> deleteDirectory.execute(path, totalFilesDeleted, totalSizeFreed, skipped)
         );
 
@@ -47,7 +47,7 @@ public class RecycleBinService {
         printRecycleBinResult.execute(result.path(), result.size(), result.files(), result.skipped(), result.isDelete());
     }
 
-    private Path proccessPath(Consumer<Path> action){
+    private Path processPath(Consumer<Path> action){
         Path pathBin = Path.of("C:\\$Recycle.Bin");
         if(Files.exists(pathBin)) action.accept(pathBin);
         return pathBin;

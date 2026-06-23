@@ -1,74 +1,80 @@
 # disk-cleaner-cli
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+CLI tool for cleaning and organizing disk space on Windows, built with Quarkus and Picocli.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Commands
 
-## Running the application in dev mode
+| Command | Description |
+|---|---|
+| `cleanb large-folders` | Finds files >= 100MB in user directories |
+| `cleanb temp` | Scans or deletes temp files |
+| `cleanb recycle-bin` | Scans or cleans the recycle bin |
+| `cleanb order` | Organizes Downloads folder by file type |
+| `cleanb --help` | Shows help with all commands |
 
-You can run your application in dev mode that enables live coding using:
+### `order` — Organize files by type
 
-```shell script
-./gradlew quarkusDev
+Scans a directory (default: `~/Downloads`), classifies files by extension, creates category folders, and moves them.
+
+```
+cleanb order                        # Organize ~/Downloads
+cleanb order --dry-run              # Preview only, no moves
+cleanb order -p "D:\Descargas"      # Custom directory
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+**Category folders created:** `PDF`, `Word`, `Excel`, `PPT`, `Textos`, `CSV`, `Imagenes`, `Videos`, `Musica`, `Archivos`, `Instaladores`, `Codigo`.
 
-## Packaging and running the application
+### `temp` — Temp files
 
-The application can be packaged using:
+```
+cleanb temp              # Scan temp directories
+cleanb temp -d           # Delete temp files
+```
 
-```shell script
+Scans: Java temp dir, `%TEMP%`, `%TMP%`, `C:\Windows\Temp`, `C:\Windows\Prefetch`, `INetCache`.
+
+### `recycle-bin` — Recycle bin
+
+```
+cleanb recycle-bin       # Scan recycle bin
+cleanb recycle-bin -d    # Empty recycle bin
+```
+
+### `large-folders` — Large files
+
+```
+cleanb large-folders     # Find files >= 100MB
+```
+
+Scans: Documents, Downloads, Videos, Pictures.
+
+## Run
+
+```shell
+./gradlew quarkusDev --quarkus-args='order --dry-run'
+```
+
+Build and run:
+
+```shell
 ./gradlew build
+java -jar build/quarkus-app/quarkus-run.jar order
 ```
 
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+## Project structure
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./gradlew build -Dquarkus.package.jar.type=uber-jar
+```
+src/main/java/bryan/app/
+├── common/               # Shared utilities
+│   ├── FormatSize.java         # Bytes to human-readable
+│   ├── ReportFormatter.java    # Boxed console output + buildReport()
+│   ├── ProcessWithLoading.java # Spinner animation for long tasks
+│   ├── ScanDirectory.java      # Walk tree, count files/sizes
+│   └── DeleteDirectory.java    # Walk tree, delete files/dirs
+├── largefolders/         # cleanb large-folders
+├── orderfiles/           # cleanb order
+├── recyclebin/           # cleanb recycle-bin
+└── temp/                 # cleanb temp
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/disk-cleaner-cli-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
-
-## Related Guides
-
-- Picocli ([guide](https://quarkus.io/guides/picocli)): Develop command line applications with Picocli
-
-## Provided Code
-
-### Picocli Example
-
-Hello and goodbye are civilization fundamentals. Let's not forget it with this example picocli application by changing the <code>command</code> and <code>parameters</code>.
-
-[Related guide section...](https://quarkus.io/guides/picocli#command-line-application-with-multiple-commands)
-
-Also for picocli applications the dev mode is supported. When running dev mode, the picocli application is executed and on press of the Enter key, is restarted.
-
-As picocli applications will often require arguments to be passed on the commandline, this is also possible in dev mode via:
-
-```shell script
-./gradlew quarkusDev --quarkus-args='Quarky'
-```
+Built with **Java 25**, **Quarkus 3.36**, **Picocli**.

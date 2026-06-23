@@ -1,4 +1,4 @@
-package bryan.app.orderFiles;
+package bryan.app.orderfiles;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -123,7 +123,7 @@ public class OrderService {
                 }
             });
         } catch (IOException e) {
-            System.err.println("Error al leer directorio: " + targetDir);
+            System.err.println("Error al leer directorio: " + targetDir + " - " + e.getMessage());
         }
 
         Map<String, Long> filesFinal = new LinkedHashMap<>();

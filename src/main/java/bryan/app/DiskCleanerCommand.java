@@ -1,7 +1,7 @@
 package bryan.app;
 
 import bryan.app.largefolders.LargeFoldersCommand;
-import bryan.app.orderFiles.OrderFilesCommand;
+import bryan.app.orderfiles.OrderFilesCommand;
 import bryan.app.recyclebin.RecycleBinCommand;
 import bryan.app.temp.TempCommand;
 import io.quarkus.picocli.runtime.annotations.TopCommand;

@@ -1,4 +1,4 @@
-package bryan.app.orderFiles;
+package bryan.app.orderfiles;
 
 import java.nio.file.Path;
 import java.util.Map;

@@ -12,8 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @ApplicationScoped
 public class PrintRecycleBinResult {
 
-    @Inject
-    FormatSize formatSize;
+    @Inject FormatSize formatSize;
 
     public void execute(Path path, AtomicLong size, AtomicLong files, AtomicLong skipped, boolean isDelete) {
 

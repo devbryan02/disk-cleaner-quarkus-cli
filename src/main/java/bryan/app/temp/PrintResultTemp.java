@@ -13,8 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @ApplicationScoped
 public class PrintResultTemp {
 
-    @Inject
-    FormatSize formatSize;
+    @Inject FormatSize formatSize;
 
     public void execute(AtomicLong totalSize, AtomicLong totalFiles, AtomicLong skipped, List<Path> tempPaths, boolean isDelete) {
 

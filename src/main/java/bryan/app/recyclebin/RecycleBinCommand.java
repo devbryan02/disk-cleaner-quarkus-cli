@@ -11,11 +11,8 @@ import picocli.CommandLine.Command;
 )
 public class RecycleBinCommand implements Runnable{
 
-    @Inject
-    RecycleBinService recycleBinService;
-
-    @Inject
-    ProcessWithLoading processWithLoading;
+    @Inject RecycleBinService recycleBinService;
+    @Inject ProcessWithLoading processWithLoading;
 
     @Option(
             names = {"-d", "--delete"},

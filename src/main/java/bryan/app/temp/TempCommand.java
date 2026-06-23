@@ -11,11 +11,8 @@ import picocli.CommandLine.Command;
 )
 public class TempCommand implements Runnable {
 
-    @Inject
-    TempFilesService tempFilesService;
-
-    @Inject
-    ProcessWithLoading processWithLoading;
+    @Inject TempFilesService tempFilesService;
+    @Inject ProcessWithLoading processWithLoading;
 
     @Option(
             names = {"-d", "--delete"},

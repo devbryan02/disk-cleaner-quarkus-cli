@@ -12,12 +12,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @ApplicationScoped
 public class PrintLargeFoldersResult {
 
-    @Inject
-    FormatSize formatSize;
+    @Inject FormatSize formatSize;
 
     // Ajustamos el límite del path para que quepa cómodamente en una sola fila tabular
     private static final int MAX_PATH_LENGTH = 50;
-    private static final int SIZE_COLUMN_WIDTH = 12; 
+    private static final int SIZE_COLUMN_WIDTH = 12;
 
     public void execute(List<LargeFileResult> results, AtomicLong skipped) {
 

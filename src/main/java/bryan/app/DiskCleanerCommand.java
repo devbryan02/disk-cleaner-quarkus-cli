@@ -1,7 +1,7 @@
 package bryan.app;
 
-import bryan.app.duplicates.DuplicateFileCommand;
 import bryan.app.largefolders.LargeFoldersCommand;
+import bryan.app.orderFiles.OrderFilesCommand;
 import bryan.app.recyclebin.RecycleBinCommand;
 import bryan.app.temp.TempCommand;
 import io.quarkus.picocli.runtime.annotations.TopCommand;
@@ -13,8 +13,8 @@ import picocli.CommandLine.Command;
         description = "Comando base",
         mixinStandardHelpOptions = true,
         subcommands = {
-                DuplicateFileCommand.class,
                 LargeFoldersCommand.class,
+                OrderFilesCommand.class,
                 RecycleBinCommand.class,
                 TempCommand.class
         })

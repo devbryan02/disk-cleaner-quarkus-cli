@@ -14,14 +14,10 @@ import java.util.function.Consumer;
 @ApplicationScoped
 public class TempFilesService {
 
-    @Inject
-    PrintResultTemp printResultTemp;
-    @Inject
-    ResolveTempFiles resolveTempFiles;
-    @Inject
-    ScanDirectory scanDirectory;
-    @Inject
-    DeleteDirectory deleteDirectory;
+    @Inject PrintResultTemp printResultTemp;
+    @Inject ResolveTempFiles resolveTempFiles;
+    @Inject ScanDirectory scanDirectory;
+    @Inject DeleteDirectory deleteDirectory;
 
     public TempFilesResult scanTempFiles() {
         AtomicLong totalSize = new AtomicLong();

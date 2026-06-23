@@ -13,12 +13,9 @@ import java.util.function.Consumer;
 @ApplicationScoped
 public class RecycleBinService {
 
-    @Inject
-    ScanDirectory scanDirectory;
-    @Inject
-    PrintRecycleBinResult printRecycleBinResult;
-    @Inject
-    DeleteDirectory deleteDirectory;
+    @Inject ScanDirectory scanDirectory;
+    @Inject PrintRecycleBinResult printRecycleBinResult;
+    @Inject DeleteDirectory deleteDirectory;
 
     public RecycleBinResult scanRecycleBin() {
 
